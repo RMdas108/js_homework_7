@@ -5,6 +5,21 @@ function zeroBefore(x){
   let j =  x < 10 ? '0'+String(x):x;
 return j; 
  }
+ function lastDigit(var_time){
+  let ending;
+if (var_time % 10 == 1 && var_time != 11){
+  ending = 'у';
+}
+else if ((var_time % 10 >=2 && var_time % 10 <= 4) && (var_time < 10 || var_time > 20)){
+   ending = 'и';
+}
+else{
+  ending = '';
+}
+  
+  return ending;
+}
+
 let currentTime = {
   hour: time.getHours(),
   minute: time.getMinutes(),
@@ -34,7 +49,8 @@ shiftTime.second += intervalSeconds;
   }
   
 console.log(
-  `Зараз «${currentTime.hour}:${zeroBefore(currentTime.minute)}:${zeroBefore(currentTime.second)}». Через ${intervalSeconds} секунд буде «${shiftTime.hour}:${zeroBefore(shiftTime.minute)}:${zeroBefore(shiftTime.second)}» `
+  `Зараз «${zeroBefore(currentTime.hour)}:${zeroBefore(currentTime.minute)}:${zeroBefore(currentTime.second)}». 
+Через ${intervalSeconds} секунд${lastDigit(intervalSeconds)} буде «${zeroBefore(shiftTime.hour)}:${zeroBefore(shiftTime.minute)}:${zeroBefore(shiftTime.second)}» `
 );
 //Завдання 1. Варіант 2.
  let currentTime_2 = new Date(); // Поточний час
@@ -47,6 +63,36 @@ const secondsToAdd = +prompt('Введіть кількість секунд...'
 const newTime = addSecondsToCurrentTime(secondsToAdd);
 
 console.log(
-  `Зараз «${currentTime_2.getHours()}:${zeroBefore(currentTime_2.getMinutes())}:${zeroBefore(currentTime_2.getSeconds())}». 
-  Через ${secondsToAdd} секунд буде «${newTime.getHours()}:${zeroBefore(newTime.getMinutes())}:${zeroBefore(newTime.getSeconds())}» `
+  `Зараз «${zeroBefore(currentTime_2.getHours())}:${zeroBefore(currentTime_2.getMinutes())}:${zeroBefore(currentTime_2.getSeconds())}». 
+Через ${secondsToAdd} секунд${lastDigit(secondsToAdd)} буде «${zeroBefore(newTime.getHours())}:${zeroBefore(newTime.getMinutes())}:${zeroBefore(newTime.getSeconds())}» `
 );
+
+//Завдання 2 і 3.
+const hoursInput = +prompt('Введіть години:');
+const minutesInput = +prompt('Введіть хвилини:');
+const secondsInput = +prompt('Введіть секунди:');
+
+const timeObject = {
+  hours: hoursInput,
+  minutes: minutesInput,
+  seconds: secondsInput
+};
+function numComp(prop,num)
+{if (prop >= num){
+  prop %= num;
+}
+else if (isNaN(prop) || prop == null) {
+  prop = String('0');
+}
+return zeroBefore(prop);
+};
+document.write(`<div>Введений Вами час: ${numComp(timeObject.hours,24)}:${numComp(timeObject.minutes,60)}:${numComp(timeObject.seconds,60)}.</div>`)
+
+
+//Завдання 3.
+const hoursInput_3 = +prompt('Введіть години:');
+const minutesInput_3 = +prompt('Введіть хвилини:');
+const secondsInput_3 = +prompt('Введіть секунди:');
+document.write(`<div>Введений Вами час ${hoursInput_3} годин${lastDigit(hoursInput_3)}, 
+${minutesInput_3} хвилин${lastDigit(minutesInput_3)}, ${secondsInput_3} секунд${lastDigit(secondsInput_3)} 
+ у секундах становить <span style='color:red;'>${hoursInput_3*60*60+minutesInput_3*60+secondsInput_3}</span></div>`);
